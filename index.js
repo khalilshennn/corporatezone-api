@@ -49,38 +49,38 @@ app.get("/", (req, res) => {
   res.json("CorporateZone - where meet Professionals");
 });
 
-const io = require("socket.io")(server, {
-  pingTimeout: 6000,
-  cors: {
-    origin: "https://corporate-zone-clitent.vercel.app/",
-  },
-});
+// const io = require("socket.io")(server, {
+//   pingTimeout: 6000,
+//   cors: {
+//     origin: "https://corporate-zone-clitent.vercel.app/",
+//   },
+// });
 
-io.on("connection", (socket) => {
-  console.log(`Connected to socket.io`);
+// io.on("connection", (socket) => {
+//   console.log(`Connected to socket.io`);
 
-  socket.on("setup", (userData) => {
-    socket.join(userData._id);
-    socket.emit("connected");
-  });
+//   socket.on("setup", (userData) => {
+//     socket.join(userData._id);
+//     socket.emit("connected");
+//   });
 
-  socket.on("join chat", (room) => {
-    socket.join(room);
-    console.log("User joined room", room);
-  });
+//   socket.on("join chat", (room) => {
+//     socket.join(room);
+//     console.log("User joined room", room);
+//   });
 
-  socket.on("new message", (newMessageReceived) => {
-    var chat = newMessageReceived.chat;
+//   socket.on("new message", (newMessageReceived) => {
+//     var chat = newMessageReceived.chat;
 
-    if (!chat.users) return console.log("chat.users not defined");
+//     if (!chat.users) return console.log("chat.users not defined");
 
-    chat.users.forEach((user) => {
-      if (user._id === newMessageReceived.sender._id) return;
+//     chat.users.forEach((user) => {
+//       if (user._id === newMessageReceived.sender._id) return;
 
-      socket.in(user._id).emait("message received", newMessageReceived);
-    });
-  });
-});
+//       socket.in(user._id).emait("message received", newMessageReceived);
+//     });
+//   });
+// });
 
 app.post("/create-pdf", (req, res) => {
   pdf.create(pdfTemplate(req.body), {}).toFile("result.pdf", (err) => {
